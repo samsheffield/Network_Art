@@ -13,8 +13,8 @@ NetAddress remoteLocation;
 // The object which holds an OSC message.
 OscMessage myOSC;
 
-// Variables to hold any arguments from received OSC messages.
-int oscX, oscY, oscButton;
+// Local variables to send
+int x, y;
 
 void setup() {
   size(600, 600);
@@ -26,16 +26,16 @@ void setup() {
 
 void draw() {
   background(127); 
-
-  myOSC = new OscMessage("/xyPosition"); 
-
-  // Messages are ordered like arrays. This is argument 0.
-  myOSC.add(mouseX);
-
-  // This is argument 1.
-  myOSC.add(mouseY);
-
-  // Send OSC message when finished adding arguments.
-  oscP5.send(myOSC, remoteLocation);
+  
+  x = mouseX;
+  y = mouseY;
+  
+  // Create an OSC message and send it
+  myOSC = new OscMessage("/xyPosition"); // The message address is /xyPosition
+  
+  myOSC.add(x); // Messages are ordered like arrays. This is argument 0.
+  myOSC.add(y); // This is argument 1.
+  
+  oscP5.send(myOSC, remoteLocation); // Send OSC message when finished adding arguments.
 }
 
